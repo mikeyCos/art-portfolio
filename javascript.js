@@ -33,12 +33,18 @@ images.forEach(function(image, index) {
         console.log(`Last image: ${lastImage}`);
 
         let modal = document.createElement('div');
+        modal.setAttribute('class', 'modal');
+        document.body.appendChild(modal);
+
+        let modalContainer = document.createElement('div');
+        modalContainer.setAttribute('class', 'modal-container');
+        modal.appendChild(modalContainer)
+
         let modalImage = document.createElement('img');
         modalImage.setAttribute('class', 'modal-image');
         modalImage.setAttribute('src', `./pictures/originals/${imageName}`);
-        modal.appendChild(modalImage);
-        modal.setAttribute('class', 'modal');
-        document.body.appendChild(modal);
+        // modal.appendChild(modalImage);
+        modalContainer.appendChild(modalImage);
         
         modalImage.onload = function() {
             // debugger
@@ -47,25 +53,20 @@ images.forEach(function(image, index) {
             closeBtn.setAttribute('class', 'modal-btn-close');
             closeBtn.setAttribute('onclick', 'closeModal()');
 
-            closeBtn.style.cssText = 
-            `right: ${(windowWidth - this.width) / 2}px;
-            top: ${(window.innerHeight - this.height) / 2}px;`;
-            modal.appendChild(closeBtn);
+            modalContainer.appendChild(closeBtn);
 
             let nextBtn = document.createElement('a');
             nextBtn.textContent = '\u{0276F}';
             nextBtn.setAttribute('class', 'modal-btn-next');
             nextBtn.setAttribute('onclick', 'changeImage(1)');
-            nextBtn.style.cssText = `right: ${(windowWidth - this.width) / 2}px`;
             
             let backBtn = document.createElement('a');
             backBtn.textContent = '\u{0276E}';
             backBtn.setAttribute('class', 'modal-btn-back');
             backBtn.setAttribute('onclick', 'changeImage(0)');
-            backBtn.style.cssText = `left: ${(windowWidth - this.width) / 2}px`;
 
-            modal.appendChild(nextBtn);
-            modal.appendChild(backBtn);
+            modalContainer.appendChild(nextBtn);
+            modalContainer.appendChild(backBtn);
         }
 
         modal.onload = window.onclick = function(event) {
