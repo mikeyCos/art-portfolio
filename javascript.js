@@ -12,101 +12,95 @@ function scrollFunction() {
     }
 }
 
-function goTop()  {
+function goTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
 
-let galleryImages = document.querySelectorAll('.gallery-image');
-let getLatestOpenedImage;
+let images = document.querySelectorAll('.gallery-image');
 let windowWidth = window.innerWidth;
+let currentImageName;
+let lastImage;
 
-if(galleryImages) {
-    galleryImages.forEach(function(image, index) {
-        image.onclick = function() {
-            let getElementSRC = image.getAttribute('src');
-            let getFilePath = getElementSRC.split('./pictures/thumbnails/');
-            let getFileName = getFilePath[1];
+images.forEach(function(image, index) {
+    image.onclick = function() {
+        // debugger
+        let imageSource = image.getAttribute('src');
+        let imageName = imageSource.substring(imageSource.lastIndexOf('/') + 1);
 
-            console.log(index);
-            getLatestOpenedImage = index;
-            console.log(getLatestOpenedImage);
+        lastImage = images.length - index - 1;
+        console.log(index);
+        console.log(`Last image: ${lastImage}`);
 
-            let container = document.body;
-            let newImageWindow = document.createElement('div');
-            container.appendChild(newImageWindow);
-            newImageWindow.setAttribute('class', 'image-window');
-            newImageWindow.setAttribute('onclick', 'closeImage()');
+        let modal = document.createElement('div');
+        let modalImage = document.createElement('img');
+        modalImage.setAttribute('class', 'modal-image');
+        modalImage.setAttribute('src', `./pictures/originals/${imageName}`);
+        modal.appendChild(modalImage);
+        modal.setAttribute('class', 'modal');
+        document.body.appendChild(modal);
+        
+        modalImage.onload = function() {
+            // debugger
+            let closeBtn = document.createElement('div');
+            closeBtn.textContent = '\u{000D7}';
+            closeBtn.setAttribute('class', 'modal-btn-close');
+            closeBtn.setAttribute('onclick', 'closeModal()');
 
-            let newImage = document.createElement('img');
-            newImageWindow.appendChild(newImage);
-            newImage.setAttribute('src', './pictures/originals/' + getFileName);
-            newImage.setAttribute('id', 'current-image');
+            closeBtn.style.cssText = 
+            `right: ${(windowWidth - this.width) / 2}px;
+            top: ${(window.innerHeight - this.height) / 2}px;`;
+            modal.appendChild(closeBtn);
 
-            newImage.onload = function() {
-                let imageWidth = this.width;
-                let imageWindowDifference = ((windowWidth - imageWidth) / 2) - 80;
+            let nextBtn = document.createElement('a');
+            nextBtn.textContent = '\u{0276F}';
+            nextBtn.setAttribute('class', 'modal-btn-next');
+            nextBtn.setAttribute('onclick', 'changeImage(1)');
+            nextBtn.style.cssText = `right: ${(windowWidth - this.width) / 2}px`;
+            
+            let backBtn = document.createElement('a');
+            backBtn.textContent = '\u{0276E}';
+            backBtn.setAttribute('class', 'modal-btn-back');
+            backBtn.setAttribute('onclick', 'changeImage(0)');
+            backBtn.style.cssText = `left: ${(windowWidth - this.width) / 2}px`;
 
-                let newNextBtn = document.createElement('a');
-                let btnNextText = document.createTextNode('NEXT');
-                newNextBtn.appendChild(btnNextText);
-                container.appendChild(newNextBtn);
-                newNextBtn.setAttribute('class', 'img-btn-next');
-                newNextBtn.setAttribute('onclick', 'changeImage(1)');
-                newNextBtn.style.cssText = `right: ${imageWindowDifference}px`;
+            modal.appendChild(nextBtn);
+            modal.appendChild(backBtn);
+        }
 
-                let newBackBtn = document.createElement('a');
-                let btnBackText = document.createTextNode('BACK');
-                newBackBtn.appendChild(btnBackText);
-                container.appendChild(newBackBtn);
-                newBackBtn.setAttribute('class', 'img-btn-back');
-                newBackBtn.setAttribute('onclick', 'changeImage(0)');
-                newBackBtn.style.cssText = `left: ${imageWindowDifference}px`;
+        modal.onload = window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.remove();
             }
         }
-    });
+    }
+});
+
+function closeModal() {
+    document.querySelector('.modal').remove();
 }
 
-function closeImage() {
-    document.querySelector('.image-window').remove();
-    document.querySelector('.img-btn-next').remove();
-    document.querySelector('.img-btn-back').remove();
-}
-
-function changeImage(changeDirection) {
-    document.querySelector('#current-image').remove();
-    let getImageWindow = document.querySelector('.image-window');
-    let newImage = document.createElement('img');
-    getImageWindow.appendChild(newImage);
-
-    let calcNewImage;
-    if (changeDirection) {
-        //to the right
-        calcNewImage = getLatestOpenedImage + 1;
-        if (calcNewImage > galleryImages.length - 1) {
-            calcNewImage = 0;
+function changeImage(direction) {
+    // debugger
+    document.querySelector('.modal-btn-next').remove();
+    document.querySelector('.modal-btn-back').remove();
+    document.querySelector('.modal-btn-close').remove();
+    let image = document.querySelector('.modal-image');
+    let newImage;
+    console.log(`newImage: ${newImage}`);
+    if (direction) {
+        newImage = --lastImage;
+        if (lastImage < 0) {
+            newImage = images.length - 1;
         }
     } else {
-        //to the left
-        calcNewImage = getLatestOpenedImage - 1;
-        if (calcNewImage < 0) {
-            calcNewImage = galleryImages.length - 1;
+        //back
+        newImage = ++lastImage;
+        if (lastImage > images.length - 1) {
+            newImage = 0;
         }
     }
-
-    newImage.setAttribute('src', `./pictures/originals/${calcNewImage}.jpg`);
-    newImage.setAttribute('id', 'current-image');
-
-    getLatestOpenedImage = calcNewImage;
-
-    newImage.onload = function() {
-        let imageWidth = this.width;
-        let imageWindowDifference = ((windowWidth - imageWidth) / 2) - 80;
-        
-        let nextBtn = document.querySelector('.img-btn-next');
-        nextBtn.style.cssText = `right: ${imageWindowDifference}px`;
-
-        let backBtn = document.querySelector('.img-btn-back');
-        backBtn.style.cssText = `left: ${imageWindowDifference}px`;
-    }
+    console.log(`newImage: ${newImage}`);
+    image.setAttribute('src', `./pictures/originals/${newImage}.jpg`);
+    lastImage = newImage;
 }
