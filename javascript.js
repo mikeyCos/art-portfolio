@@ -24,6 +24,9 @@ let lastImage;
 
 images.forEach(function(image, index) {
     image.onclick = function() {
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100%';
+
         // debugger
         let imageSource = image.getAttribute('src');
         let imageName = imageSource.substring(imageSource.lastIndexOf('/') + 1);
@@ -72,6 +75,8 @@ images.forEach(function(image, index) {
         modal.onload = window.onclick = function(event) {
             if (event.target == modal) {
                 modal.remove();
+                document.body.style.overflow = 'auto';
+                document.body.style.height = 'auto';
             }
         }
     }
@@ -79,6 +84,8 @@ images.forEach(function(image, index) {
 
 function closeModal() {
     document.querySelector('.modal').remove();
+    document.body.style.overflow = 'auto';
+    document.body.style.height = 'auto';
 }
 
 function changeImage(direction) {

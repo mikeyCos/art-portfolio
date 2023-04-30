@@ -2,26 +2,66 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(119, 136, 153);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0,0,0);
 }
 
 header {
     background-image: linear-gradient(to bottom, rgba(119, 136, 153, 0.0), rgba(119, 136, 153, .7) ),
-    url('https://placehold.co/200x600/tomato/white');
+    url('https://placehold.co/1200x600/tomato/white');
     background-repeat: no-repeat;
     background-size: cover;
+    background-color:rgb(231, 78, 54);
     background-position: center;
     min-width: 100%;
     min-height: 100vh;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0px 5px 5px -5px #111; 
 }
 
-header #navbar {
-    min-width: 100%;
-    min-height: 100vh;
+.jump-down {
+    position: absolute;
+    bottom: 10%;
+}
+
+.jump-down .container a {
+    display: inline-block;
+}
+
+#arrow-down {
+    border: solid white;
+    border-width: 0 min(1.5vw, 3px) min(1.5vw, 3px) 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg) scale(2);
+    -webkit-transform: rotate(45deg) scale(2);
+    transition: 700ms;
+}
+
+#arrow-down:hover {
+    transform: rotate(45deg) scale(5);
+    -webkit-transform: rotate(45deg) scale(5);
+    border: solid rgb(0, 0, 0);
+    border-width: 0 3px 3px 0;
+    -webkit-mask:repeating-linear-gradient(45deg, transparent 0 0.2px, rgba(0,0,0,1) 0 1px);
+    mask:repeating-linear-gradient(45deg, transparent 0 0.2px, rgba(0,0,0,1) 0 1px);
+    transition: 500ms;
 }
 
 #navbar .container {
@@ -32,7 +72,10 @@ header #navbar {
     flex-direction: column;
     flex-wrap: wrap;
     padding: 0.5rem;
-    animation: nav-load 400ms ease-in;
+}
+
+#navbar, #hero-text {
+    animation: header-load 300ms ease-in;
 }
 
 .nav-items {
@@ -44,15 +87,14 @@ header #navbar {
 }
 
 #logo {
-    margin-left: -100%;
+    position: absolute;
+    top: 0;
+    right: 0;
     padding: 1.5em;
-    float: right;
 }
 
 .nav-items a {
-    font-size: clamp(0.90rem, 2vw, 10rem);
-    text-decoration: none;
-    color: rgb(0,0,0);
+    font-size: clamp(1rem, 2vw, 10rem);
     padding: 1rem;
     position: relative;
 }
@@ -65,7 +107,7 @@ header #navbar {
     animation: nav-link-right 600ms ease-in;
 }
 
-#navbar .container a:hover {
+.nav-items a:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.05em;
     /* border-bottom: 0.15em solid white; */
@@ -75,7 +117,7 @@ header #navbar {
     transition: all 200ms ease-in-out;
 }
 
-#navbar .container a::after {
+.nav-items a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -88,14 +130,14 @@ header #navbar {
     transition: transform 250ms ease-in;
 }
 
-#navbar .container a:hover::after {
+.nav-items a:hover::after {
     transform: scaleX(1);
 }
 
 #hero-text {
     text-align: center;
     text-transform: uppercase;
-    font-size: clamp(1em, 10vw, 10em);
+    font-size: clamp(1.25rem, 10vw, 10em);
     font-weight: bolder;
 }
 
@@ -105,6 +147,18 @@ header #navbar {
 
 #hero-text p:first-child::before {
     content: 'michael';
+    -webkit-mask:repeating-linear-gradient(-45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
+    mask:repeating-linear-gradient(-45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
+}
+
+#hero-text p:last-child::before {
+    content: 'recitis';
+    -webkit-mask:repeating-linear-gradient(45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
+    mask:repeating-linear-gradient(45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
+}
+
+#hero-text p:first-child::before,
+#hero-text p:last-child::before {
     position: absolute;
     left: 0;
     right: 0;
@@ -120,8 +174,6 @@ header #navbar {
         0px 0px,
         0px 0px,
         0px 0px;
-    -webkit-mask:repeating-linear-gradient(-45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
-    mask:repeating-linear-gradient(-45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
     transition: 500ms;
 }
 
@@ -151,28 +203,6 @@ header #navbar {
     transition: 500ms;
 }
 
-#hero-text p:last-child::before {
-    content: 'recitis';
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    text-shadow:
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px,
-        0px 0px;
-    -webkit-mask:repeating-linear-gradient(45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
-    mask:repeating-linear-gradient(45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
-    transition: 500ms;
-}
-
 #top-btn {
     display: none;
     border: none;
@@ -184,11 +214,12 @@ header #navbar {
 }
 
 #gallery .container {
-    background-color: rgb(119, 136, 153);
+    /* background-color: rgb(119, 136, 153); */
+    padding: 1em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    box-shadow: inset 0 0.5em 0.5em rgba(0, 0, 0,0.5);
+    /* box-shadow: inset 0 0.5em 0.5em rgba(0, 0, 0,0.5); */
 }
 
 #gallery .container .images-item {
@@ -208,7 +239,7 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 1em;
-    max-width: 100vw;
+    min-width: 100%;
     padding: 0.5em;
     color: black;
     font-weight: 700;
@@ -216,16 +247,16 @@ footer {
 }
 
 .git-hub > img {
-    max-width: 2em;
+    max-width: 24px;
 }
 
 .git-hub > img:hover {
     animation: git-hub-spin linear 500ms infinite;
 }
 
-@keyframes nav-load {
+@keyframes header-load {
     0% {
-        transform: translateY(-100%);
+        transform: translateY(-200%);
     }
     
     100% {
@@ -264,13 +295,23 @@ footer {
 }
 
 @media screen and (min-width: 768px) {
+    #logo {
+        padding: 2em;
+    }
+
+    #navbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+    }
+
     #navbar .container {
         flex-direction: column-reverse;
     }
 
     .nav-items {
-        flex-direction: row-reverse;
-        justify-content: flex-end;
+        justify-content: flex-start;
         min-width: 100%;
         align-self: flex-start;
         padding-bottom: 1em;
@@ -282,8 +323,9 @@ footer {
         font-size: clamp(0.5rem, 2vw, 1.5rem);
     }
 
-    #hero-text {
-        margin-bottom: auto;
+    #gallery {
+        min-width: 90%;
+        /* max-width: 95%; */
     }
 
     #gallery .container {
@@ -293,7 +335,7 @@ footer {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         grid-auto-rows: 400px;
         grid-auto-flow: dense;
-        place-content: center;
+        place-self: center;
     }
 
     #gallery .container .images-item {
