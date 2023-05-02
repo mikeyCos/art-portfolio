@@ -15,15 +15,15 @@ body {
 
 a {
     text-decoration: none;
-    color: rgb(0,0,0);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 header {
-    background-image: linear-gradient(to bottom, rgba(119, 136, 153, 0.0), rgba(119, 136, 153, .7) ),
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(119, 136, 153, 0.8) ),
     url('../pictures/originals/94.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-color:rgb(231, 78, 54);
+    background-color:rgb(255, 255, 255);
     background-position: center;
     min-width: 100%;
     min-height: 100vh;
@@ -95,8 +95,13 @@ header {
 
 .nav-items a {
     font-size: clamp(1rem, 2vw, 10rem);
+    font-weight:700;
     padding: 1rem;
     position: relative;
+}
+
+.nav-items .active {
+    color: rgba(0, 0, 0, 1);
 }
 
 .nav-items a:first-child {
@@ -108,6 +113,7 @@ header {
 }
 
 .nav-items a:hover {
+    color: rgb(151, 151, 151);
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.05em;
     /* border-bottom: 0.15em solid white; */
@@ -124,7 +130,7 @@ header {
     bottom: 0;
     width: 100%;
     height: 0.25em;
-    background: white;
+    background: rgb(40, 40, 40);
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 250ms ease-in;

@@ -1,3 +1,11 @@
+let currentPage = window.location.pathname;
+let navLinks = document.querySelectorAll('.nav-items a');
+navLinks.forEach(function(link) {
+    if (currentPage === link.pathname) {
+        link.setAttribute('class', 'active');
+    }
+});
+
 // Article helped me figure out current scoll location
     // https://dev.to/ljcdev/scroll-to-top-button-in-vanilla-js-beginners-2nc
 let topButton = document.getElementById('top-btn');
