@@ -54,8 +54,9 @@ images.forEach(function(image, index) {
         let modalImage = document.createElement('img');
         modalImage.setAttribute('class', 'modal-image');
         modalImage.setAttribute('src', `./pictures/originals/${imageName}`);
-        // modal.appendChild(modalImage);
         modalContainer.appendChild(modalImage);
+
+        document.addEventListener('keydown', getKeys);
         
         modalImage.onload = function() {
             // debugger
@@ -71,6 +72,7 @@ images.forEach(function(image, index) {
             nextBtn.setAttribute('class', 'modal-btn-next');
             nextBtn.setAttribute('onclick', 'changeImage(1)');
             
+            
             let backBtn = document.createElement('a');
             backBtn.textContent = '\u{0276E}';
             backBtn.setAttribute('class', 'modal-btn-back');
@@ -78,6 +80,7 @@ images.forEach(function(image, index) {
 
             modalContainer.appendChild(nextBtn);
             modalContainer.appendChild(backBtn);
+
         }
 
         modal.onload = window.onclick = function(event) {
@@ -94,6 +97,8 @@ function closeModal() {
     document.querySelector('.modal').remove();
     document.body.style.overflow = 'auto';
     document.body.style.height = 'auto';
+
+    document.removeEventListener('keydown', preventTab);
 }
 
 function changeImage(direction) {
@@ -103,13 +108,14 @@ function changeImage(direction) {
     document.querySelector('.modal-btn-close').remove();
     let image = document.querySelector('.modal-image');
     let newImage;
+
     console.log(`newImage: ${newImage}`);
-    if (direction) {
+    if (direction === 1) {
         newImage = --lastImage;
         if (lastImage < 0) {
             newImage = images.length - 1;
         }
-    } else {
+    } else if (direction === 0){
         //back
         newImage = ++lastImage;
         if (lastImage > images.length - 1) {
@@ -119,4 +125,17 @@ function changeImage(direction) {
     console.log(`newImage: ${newImage}`);
     image.setAttribute('src', `./pictures/originals/${newImage}.jpg`);
     lastImage = newImage;
+}
+
+function getKeys(e) {
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        console.log('activated')
+    } else if (e.key === 'ArrowRight') {
+        changeImage(1);
+    } else if (e.key === 'ArrowLeft') {
+        changeImage(0);
+    } else if (e.key === 'Escape') {
+        closeModal();
+    }
 }

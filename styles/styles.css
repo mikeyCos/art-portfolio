@@ -215,7 +215,7 @@ header {
     padding: 0.25rem;
     font-size: 0.7rem;
     position: fixed;
-    top: 2%;
+    bottom: 2%;
     right: 2%;
 }
 
@@ -401,6 +401,7 @@ footer {
 }
 
 .modal-btn-close {
+    font-size: 1.5em;
     padding: 0.5em;
     position: absolute;
     top: 0;
@@ -424,7 +425,8 @@ footer {
 
 .modal-btn-next,
 .modal-btn-back {
-    padding: 2em;
+    font-size: 1.5em;
+    padding: 0.5em;
     position: absolute;
     top: 50%;
     -webkit-text-stroke: 0.025em black;

@@ -40,21 +40,35 @@
                     <p>For commissions and project inquiries please fill and submit the form or email: placeholder@email.com</p>
                 </div>
 
-                <form class="form" acton="" method="post">
+                <form class="form" action="" method="post">
+
+                    <!-- <div class="form-item"> -->
+                        <label hidden class="honepot" for="honeypot"></label>
+                        <input hidden id="honepot" class="honepot" type="text" tab-index="-1">
+                    <!-- </div> -->
+
+                    <!-- <div class="form-item"> -->
+                        <label><span class="asterisk">*</span> Indicates required field</label>
+                    <!-- </div> -->
+
                     <div class="form-item">
-                        <input required type="text" class="input" placeholder="first name" name="first_name">
+                        <label for="first_name">First name <span class="asterisk">*</span></label>
+                        <input id="first_name" type="text" class="input" placeholder="first name" name="first_name" required>
                     </div>
 
                     <div class="form-item">
-                        <input required type="text" class="input" placeholder="last name" name="last_name">
+                        <label for="last_name">Last name <span class="asterisk">*</span></label>
+                        <input id="last_name" type="text" class="input" placeholder="last name" name="last_name" required>
                     </div>
 
                     <div class="form-item">
-                        <input required type="email" class="input" placeholder="your_email@address.com" name="email">
+                        <label for="email">Email <span class="asterisk">*</span></label>
+                        <input id="email" type="email" class="input" placeholder="your_email@address.com" name="email" required>
                     </div>
 
                     <div class="form-item">
-                        <textarea required maxlength="500" rows="10" placeholder="message" name="message"></textarea>
+                        <label for="message">Message <span class="asterisk">*</span></label>
+                        <textarea id="message" maxlength="500" rows="10" placeholder="message (500 characters max)" name="message" required></textarea>
                     </div>
 
                     <div class="form-item">
